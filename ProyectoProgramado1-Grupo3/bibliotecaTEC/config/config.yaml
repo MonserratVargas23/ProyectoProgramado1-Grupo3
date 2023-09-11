@@ -1,0 +1,137 @@
+# Archivo de configuración de la base de datos y autenticación
+
+# Configuración de la aplicación Flask
+app:
+  secret_key: your_secret_key
+
+# Configuración de la conexión a MongoDB en los nodos
+mongo:
+  sirio:
+    nombre: sirio
+    ip: 192.168.100.137
+    puerto: 27018
+    usuario: tu_usuario
+    contrasena: tu_contrasena
+  aldebaran:
+    nombre: aldebaran
+    ip: 192.168.100.138
+    puerto: 27018
+    usuario: tu_usuario
+    contrasena: tu_contrasena
+  elnath:
+    nombre: elnath
+    ip: 192.168.100.139
+    puerto: 27018
+    usuario: tu_usuario
+    contrasena: tu_contrasena
+
+# Información de los nodos
+nodos:
+  sirio:
+    nombre: sirio
+    ip: 192.168.100.137
+    puerto: 27018
+    tipo: servidor
+    ubicacion: Cartago
+    campus: Oriental
+  aldebaran:
+    nombre: aldebaran
+    ip: 192.168.100.138
+    puerto: 27018
+    tipo: servidor
+    ubicacion: SanJose
+    campus: SanJose
+  elnath:
+    nombre: elnath
+    ip: 192.168.100.139
+    puerto: 27018
+    tipo: servidor
+    ubicacion: SanJose
+    campus: MontesDeOca
+  betelgeuse:
+    nombre: betelgeuse
+    ip: 192.168.100.140
+    puerto: 27018
+    tipo: shard
+    ubicacion: SanCarlos
+    campus: SantaClara
+  rigel:
+    nombre: rigel
+    ip: 192.168.100.141
+    puerto: 27018
+    tipo: shard
+    ubicacion: Limon
+    campus: SanJose
+  alnilam:
+    nombre: alnilam
+    ip: 192.168.100.142
+    puerto: 27018
+    tipo: shard
+    ubicacion: Alajuela
+    campus: MontesDeOca
+  antares:
+    nombre: antares
+    ip: 192.168.100.143
+    puerto: 27017
+    tipo: router
+    ubicacion: Alajuela
+    campus: MontesDeOca
+  shaula:
+    nombre: shaula
+    ip: 192.168.100.144
+    puerto: 27017
+    tipo: router
+    ubicacion: SanJose
+    campus: SanJose
+  sargas:
+    nombre: sargas
+    ip: 192.168.100.145
+    puerto: 27017
+    tipo: router
+    ubicacion: SanJose
+    campus: MontesDeOca
+
+# Configuración de réplicaSet en MongoDB
+replica_set:
+  nombre:  Config Server Replica Set
+  miembros:
+    - 192.168.100.137:27018
+    - 192.168.100.138:27018
+    - 192.168.100.139:27018
+replica_set:
+  nombre:  Shard Server Replica Set (rs0
+  miembros:
+    - 192.168.100.140:27019
+    - 192.168.100.141:27019
+    - 192.168.100.142:27019
+replica_set:
+  nombre:  Mongos (Query Router)
+  miembros:
+    - 192.168.100.143:27017
+    - 192.168.100.144:27017
+    - 192.168.100.145:27017
+
+# Otras configuraciones, como tokens de autenticación, etc.
+otras_configuraciones:
+  jwt_secret_key: your_jwt_secret_key
+  api_key: your_api_key
+
+
+import yaml
+
+# Cargar la configuración desde el archivo YAML
+with open('config.yaml', 'r') as yaml_file:
+    config = yaml.safe_load(yaml_file)
+
+# Acceder a la configuración en tu aplicación Flask
+app.secret_key = config['app']['secret_key']
+
+# Acceder a la configuración de la conexión a MongoDB en los nodos
+nodo_sirio = config['mongo']['sirio']
+nodo_aldebaran = config['mongo']['aldebaran']
+nodo_elnath = config['mongo']['elnath']
+
+# Acceder a la información de los nodos
+nodo_sirio_info = config['nodos']['sirio']
+nodo_aldebaran_info = config['nodos']['aldebaran']
+nodo_elnath_info = config['nodos']['elnath']
